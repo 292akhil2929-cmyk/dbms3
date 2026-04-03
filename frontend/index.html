@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopSphere - Your One-Stop Shopping Destination</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <i class="fas fa-shopping-bag"></i>
+                ShopSphere
+            </a>
+            <div class="nav-menu">
+                <a href="#" class="nav-link active" data-page="home">Home</a>
+                <a href="#" class="nav-link" data-page="products">Products</a>
+                <a href="#" class="nav-link" data-page="categories">Categories</a>
+                <a href="#" class="nav-link" data-page="about">About</a>
+            </div>
+            <div class="nav-actions">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Search products...">
+                    <button id="searchBtn"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="nav-icons">
+                    <a href="#" class="icon-link" id="cartIcon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </a>
+                    <a href="#" class="icon-link" id="userIcon">
+                        <i class="fas fa-user"></i>
+                    </a>
+                </div>
+            </div>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="mainContent">
+        <!-- Hero Section -->
+        <section class="hero" id="heroSection">
+            <div class="hero-content">
+                <h1>Welcome to ShopSphere</h1>
+                <p>Discover amazing products at unbeatable prices</p>
+                <button class="btn btn-primary" id="shopNowBtn">Shop Now</button>
+            </div>
+        </section>
+
+        <!-- Featured Categories -->
+        <section class="categories-section" id="categoriesSection">
+            <h2 class="section-title">Shop by Category</h2>
+            <div class="categories-grid" id="categoriesGrid">
+                <!-- Categories loaded dynamically -->
+            </div>
+        </section>
+
+        <!-- Featured Products -->
+        <section class="products-section" id="productsSection">
+            <h2 class="section-title">Featured Products</h2>
+            <div class="products-grid" id="productsGrid">
+                <!-- Products loaded dynamically -->
+            </div>
+        </section>
+
+        <!-- Products Page (Hidden by default) -->
+        <section class="all-products-page hidden" id="allProductsPage">
+            <div class="products-header">
+                <h2>All Products</h2>
+                <div class="filter-sort">
+                    <select id="categoryFilter">
+                        <option value="">All Categories</option>
+                    </select>
+                    <select id="sortBy">
+                        <option value="name">Sort by Name</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="rating">Highest Rated</option>
+                    </select>
+                </div>
+            </div>
+            <div class="products-grid" id="allProductsGrid">
+                <!-- All products loaded dynamically -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>Your Cart</h3>
+            <button class="close-cart" id="closeCart">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Cart items loaded dynamically -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cartTotal">$0.00</span>
+            </div>
+            <button class="btn btn-primary btn-checkout" id="checkoutBtn">Checkout</button>
+        </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div class="modal" id="authModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeAuthModal">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="login">Login</button>
+                <button class="auth-tab" data-tab="register">Register</button>
+            </div>
+            <form class="auth-form" id="loginForm">
+                <h3>Welcome Back</h3>
+                <div class="form-group">
+                    <input type="email" id="loginEmail" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="loginPassword" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+            <form class="auth-form hidden" id="registerForm">
+                <h3>Create Account</h3>
+                <div class="form-group">
+                    <input type="text" id="registerName" placeholder="Full Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="registerEmail" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="registerPassword" placeholder="Password" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Register</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Product Detail Modal -->
+    <div class="modal" id="productModal">
+        <div class="modal-content product-detail">
+            <button class="modal-close" id="closeProductModal">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="product-detail-content" id="productDetailContent">
+                <!-- Product details loaded dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- User Dashboard Modal -->
+    <div class="modal" id="dashboardModal">
+        <div class="modal-content dashboard">
+            <button class="modal-close" id="closeDashboardModal">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="dashboard-content">
+                <div class="dashboard-sidebar">
+                    <div class="user-info" id="userInfo">
+                        <i class="fas fa-user-circle"></i>
+                        <span id="userName">User</span>
+                    </div>
+                    <nav class="dashboard-nav">
+                        <a href="#" class="dash-link active" data-section="orders">My Orders</a>
+                        <a href="#" class="dash-link" data-section="profile">Profile</a>
+                        <a href="#" class="dash-link" data-section="reviews">My Reviews</a>
+                        <a href="#" class="dash-link logout" id="logoutBtn">Logout</a>
+                    </nav>
+                </div>
+                <div class="dashboard-main" id="dashboardMain">
+                    <!-- Dashboard content loaded dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span id="toastMessage"></span>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>ShopSphere</h4>
+                <p>Your one-stop destination for quality products at great prices.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <a href="#">About Us</a>
+                <a href="#">Contact</a>
+                <a href="#">FAQ</a>
+                <a href="#">Shipping Info</a>
+            </div>
+            <div class="footer-section">
+                <h4>Customer Service</h4>
+                <a href="#">Returns</a>
+                <a href="#">Track Order</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+            <div class="footer-section">
+                <h4>Connect With Us</h4>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 ShopSphere. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
