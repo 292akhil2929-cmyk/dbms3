@@ -1,0 +1,6 @@
+{
+  "type": "module",
+  "dependencies": {
+    "unzipper": "^0.12.3"
+  }
+}
