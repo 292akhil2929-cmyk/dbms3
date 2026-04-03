@@ -1,13 +1,44 @@
-import { createReadStream } from 'fs';
-import { join } from 'path';
-import unzipper from 'unzipper';
+import AdmZip from 'adm-zip';
+import { readdirSync, existsSync } from 'fs';
 
-const projectDir = '/vercel/share/v0-project';
+// Try to find the zip file
+const possiblePaths = [
+  '/vercel/share/v0-project/shopsphere.zip',
+  './shopsphere.zip',
+  '../shopsphere.zip',
+  process.cwd() + '/shopsphere.zip'
+];
 
-console.log('Listing contents of shopsphere.zip...\n');
+console.log('Current working directory:', process.cwd());
+console.log('Directory contents:', readdirSync(process.cwd()));
 
-const directory = await unzipper.Open.file(join(projectDir, 'shopsphere.zip'));
+let zipPath = null;
+for (const p of possiblePaths) {
+  console.log('Checking path:', p, 'exists:', existsSync(p));
+  if (existsSync(p)) {
+    zipPath = p;
+    break;
+  }
+}
 
-for (const file of directory.files) {
-  console.log(file.path, file.type, file.uncompressedSize);
+if (!zipPath) {
+  console.log('Could not find shopsphere.zip');
+  process.exit(1);
+}
+
+console.log('\nUsing zip path:', zipPath);
+
+try {
+  const zip = new AdmZip(zipPath);
+  const entries = zip.getEntries();
+  
+  console.log('\nZip contents (' + entries.length + ' entries):\n');
+  
+  for (const entry of entries) {
+    if (!entry.isDirectory) {
+      console.log(entry.entryName);
+    }
+  }
+} catch (err) {
+  console.error('Error:', err.message);
 }
